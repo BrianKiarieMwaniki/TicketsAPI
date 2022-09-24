@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TicketsAPI.Models;
+
 
 namespace TicketsAPI.ModelValidations
 {

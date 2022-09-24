@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using TicketsAPI.Models;
 
 namespace TicketsAPI.Filter
 {
@@ -16,17 +15,17 @@ namespace TicketsAPI.Filter
             {
                 bool isValid = true;
 
-                if (ticket.EnteredDate.HasValue == false)
+                if (ticket.ReportDate.HasValue == false)
                 {
-                    context.ModelState.AddModelError("EnteredDate", "EnteredDate is required.");
+                    context.ModelState.AddModelError("ReportDate", "ReportDate is required.");
                     isValid = false;
                 }
 
-                if (ticket.EnteredDate.HasValue &&
+                if (ticket.ReportDate.HasValue &&
                     ticket.DueDate.HasValue &&
-                    ticket.EnteredDate > ticket.DueDate)
+                    ticket.ReportDate > ticket.DueDate)
                 {
-                    context.ModelState.AddModelError("DueDate", "DueDate has to be later than the EnteredDate.");
+                    context.ModelState.AddModelError("DueDate", "DueDate has to be later than the ReportDate.");
                     isValid = false;
                 }
 
