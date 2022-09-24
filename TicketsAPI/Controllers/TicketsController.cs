@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TicketsAPI.Filter;
-using TicketsAPI.Models;
 
 namespace TicketsAPI.Controllers
 {
