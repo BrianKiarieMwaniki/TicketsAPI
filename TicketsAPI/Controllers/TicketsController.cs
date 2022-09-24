@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TicketsAPI.Filter;
 
 namespace TicketsAPI.Controllers
 {
@@ -20,15 +19,7 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostV1([FromBody] Ticket ticket)
-        {
-            return Ok(ticket);
-        }
-
-        [HttpPost]
-        [Route("/api/v2/tickets")]
-        [Ticket_ValidateDatesActionFilter]
-        public IActionResult PostV2([FromBody] Ticket ticket)
+        public IActionResult Post([FromBody] Ticket ticket)
         {
             return Ok(ticket);
         }
