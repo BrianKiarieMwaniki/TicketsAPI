@@ -42,7 +42,7 @@ namespace TicketsAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id,[FromBody] Ticket ticket)
         {
-            if (id == ticket.Id) return BadRequest();
+            if (id != ticket.Id) return BadRequest();
 
             _context.Entry(ticket).State = EntityState.Modified;
 
