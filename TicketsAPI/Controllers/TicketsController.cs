@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataStore.EF;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace TicketsAPI.Controllers
 {
@@ -6,21 +8,35 @@ namespace TicketsAPI.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
+        private readonly BugsContext _context;
+
+        public TicketsController(BugsContext context)
+        {
+            _context = context;
+        }
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Reading all the tickets.");
+            return Ok(_context.Tickets.AsNoTracking().ToList());
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok($"Reading ticket #{id}.");
+            var ticket = _context.Tickets.SingleOrDefault(p => p.Id == id);
+
+            if (ticket is null) return NotFound();
+
+            return Ok(ticket);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] Ticket ticket)
         {
+            _context.Tickets.Add(ticket);
+            _context.SaveChanges();
+
+
             return Ok(ticket);
         }
 
