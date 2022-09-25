@@ -35,9 +35,10 @@ namespace TicketsAPI.Controllers
         [Route("api/projects/{id}/tickets")]
         public IActionResult GetProjectTickets(int projectId)
         {
-            var tickets = _context.Tickets.Where(t => t.ProjectId == projectId).AsNoTracking().ToList();
+            var tickets = _context.Tickets.Where(t => t.ProjectId == projectId).ToList();
 
-            if (!tickets.Any()) return NotFound();
+            //if (!tickets.Any()) return NotFound();
+            if (tickets is null && tickets.Count < 0) return NotFound();
 
             return Ok(tickets);
         }

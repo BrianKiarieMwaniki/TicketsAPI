@@ -36,20 +36,41 @@ namespace TicketsAPI.Controllers
             _context.Tickets.Add(ticket);
             _context.SaveChanges();
 
-
-            return Ok(ticket);
+            return CreatedAtAction(nameof(GetById), new {id = ticket.Id}, ticket);
         }
 
-        [HttpPut]
-        public IActionResult Put([FromBody] Ticket ticket)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id,[FromBody] Ticket ticket)
         {
-            return Ok(ticket);
+            if (id == ticket.Id) return BadRequest();
+
+            _context.Entry(ticket).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch
+            {
+                if(_context.Tickets.SingleOrDefault(t => t.Id == id) == null)
+                {
+                    return NotFound();
+                }
+                throw;
+            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Ok($"Deleting ticket #{id}.");
+            var ticket = _context.Tickets.SingleOrDefault(t => t.Id == id);
+            if(ticket is null) return NotFound();
+
+            _context.Tickets.Remove(ticket);
+            _context.SaveChanges();
+
+            return Ok(ticket);
         }
     }
 }
