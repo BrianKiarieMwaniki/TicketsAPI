@@ -5,7 +5,7 @@ namespace Core.Models
 {
     public class Ticket
     {
-        public int? TicketId { get; set; }
+        public int? Id { get; set; }
         [Required]
         public int? ProjectId { get; set; }
         [Required]
@@ -27,7 +27,7 @@ namespace Core.Models
         /// </summary>        
         public bool ValidateFutureDueDate()
         {
-            if (TicketId.HasValue) return true;
+            if (Id.HasValue) return true;
 
             if(!DueDate.HasValue) return true;
 
