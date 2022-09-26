@@ -1,5 +1,7 @@
 global using Core.Models;
 using DataStore.EF;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using TicketsAPI.Utils;
 
@@ -14,6 +16,13 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Services.AddControllers();
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ApiVersionReader = new HeaderApiVersionReader("x-API-Version");
+});
 
 var app = builder.Build();
 
