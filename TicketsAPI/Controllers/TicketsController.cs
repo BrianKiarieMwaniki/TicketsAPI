@@ -15,15 +15,15 @@ namespace TicketsAPI.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_context.Tickets.AsNoTracking().ToList());
+            return Ok(await _context.Tickets.AsNoTracking().ToListAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var ticket = _context.Tickets.SingleOrDefault(p => p.Id == id);
+            var ticket = await _context.Tickets.SingleOrDefaultAsync(p => p.Id == id);
 
             if (ticket is null) return NotFound();
 
@@ -31,16 +31,16 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Ticket ticket)
+        public async Task<IActionResult> Post([FromBody] Ticket ticket)
         {
-            _context.Tickets.Add(ticket);
-            _context.SaveChanges();
+            await _context.Tickets.AddAsync(ticket);
+            await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetById), new {id = ticket.Id}, ticket);
+            return CreatedAtAction(nameof(GetById), new { id = ticket.Id }, ticket);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id,[FromBody] Ticket ticket)
+        public async Task<IActionResult> Put(int id, [FromBody] Ticket ticket)
         {
             if (id != ticket.Id) return BadRequest();
 
@@ -48,11 +48,11 @@ namespace TicketsAPI.Controllers
 
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch
             {
-                if(_context.Tickets.SingleOrDefault(t => t.Id == id) == null)
+                if (await _context.Tickets.SingleOrDefaultAsync(t => t.Id == id) == null)
                 {
                     return NotFound();
                 }
@@ -62,13 +62,13 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var ticket = _context.Tickets.SingleOrDefault(t => t.Id == id);
-            if(ticket is null) return NotFound();
+            var ticket = await _context.Tickets.SingleOrDefaultAsync(t => t.Id == id);
+            if (ticket is null) return NotFound();
 
             _context.Tickets.Remove(ticket);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(ticket);
         }
