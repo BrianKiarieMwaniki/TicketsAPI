@@ -17,15 +17,15 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            return Ok(_context.Projects.AsNoTracking().ToList());
+            return Ok(await _context.Projects.AsNoTracking().ToListAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var project = _context.Projects.SingleOrDefault(p => p.Id == id);
+            var project = await _context.Projects.SingleOrDefaultAsync(p => p.Id == id);
             if (project == null) return NotFound();
 
             return Ok(project);
@@ -33,9 +33,9 @@ namespace TicketsAPI.Controllers
 
         [HttpGet]
         [Route("api/projects/{id}/tickets")]
-        public IActionResult GetProjectTickets(int projectId)
+        public async Task<IActionResult> GetProjectTickets(int projectId)
         {
-            var tickets = _context.Tickets.Where(t => t.ProjectId == projectId).ToList();
+            var tickets = await _context.Tickets.Where(t => t.ProjectId == projectId).ToListAsync();
 
             //if (!tickets.Any()) return NotFound();
             if (tickets is null && tickets.Count < 0) return NotFound();
@@ -44,16 +44,16 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Project project)
+        public async Task<IActionResult> Post([FromBody]Project project)
         {
-            _context.Projects.Add(project);
-            _context.SaveChanges();
+            await _context.Projects.AddAsync(project);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = project.Id }, project);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Project project)
+        public async Task<IActionResult> Put(int id, Project project)
         {
             if (id != project.Id) return BadRequest();
 
@@ -61,11 +61,11 @@ namespace TicketsAPI.Controllers
 
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch 
             {
-                if(_context.Projects.SingleOrDefault(p =>p.Id == id) == null)
+                if(await _context.Projects.SingleOrDefaultAsync(p =>p.Id == id) == null)
                 {
                     return NotFound();
                 }
@@ -76,13 +76,13 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var project = _context.Projects.SingleOrDefault(p => p.Id == id);
+            var project = await _context.Projects.SingleOrDefaultAsync(p => p.Id == id);
             if (project is null) return NotFound();
 
             _context.Projects.Remove(project);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(project);
         }
