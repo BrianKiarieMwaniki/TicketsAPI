@@ -1,24 +1,21 @@
 ﻿using DataStore.EF;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TicketsAPI.Filter.V2.TicketFilter;
 
-namespace TicketsAPI.Controllers
+namespace TicketsAPI.Controllers.v2
 {
-    [ApiVersion("1.0")]
-    [Route("api/[controller]")]
+    [ApiVersion("2.0")]
+    [Route("api/tickets")]
     [ApiController]
-    public class TicketsController : ControllerBase
+    public class TicketsV2Controller : ControllerBase
     {
         private readonly BugsContext _context;
 
-        public TicketsController(BugsContext context)
+        public TicketsV2Controller(BugsContext context)
         {
             _context = context;
-        }
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            return Ok(await _context.Tickets.AsNoTracking().ToListAsync());
         }
 
         [HttpGet("{id}")]
@@ -32,15 +29,17 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Ticket ticket)
+        [EnsureDescriptionPresentActionFilter]
+        public async Task<IActionResult> Post([FromBody]Ticket ticket)
         {
-            await _context.Tickets.AddAsync(ticket);
+            _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = ticket.Id }, ticket);
         }
 
         [HttpPut("{id}")]
+        [EnsureDescriptionPresentActionFilter]
         public async Task<IActionResult> Put(int id, [FromBody] Ticket ticket)
         {
             if (id != ticket.Id) return BadRequest();
@@ -60,18 +59,6 @@ namespace TicketsAPI.Controllers
                 throw;
             }
             return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var ticket = await _context.Tickets.SingleOrDefaultAsync(t => t.Id == id);
-            if (ticket is null) return NotFound();
-
-            _context.Tickets.Remove(ticket);
-            await _context.SaveChangesAsync();
-
-            return Ok(ticket);
         }
     }
 }
