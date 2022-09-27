@@ -7,6 +7,7 @@ using TicketsAPI.Filter.V2.TicketFilter;
 namespace TicketsAPI.Controllers.v2
 {
     [ApiVersion("2.0")]
+    //[Route("api/v{v:apiVersion}/tickets")] version with route
     [Route("api/tickets")]
     [ApiController]
     public class TicketsV2Controller : ControllerBase
