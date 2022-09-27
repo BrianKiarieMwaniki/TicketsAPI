@@ -3,6 +3,7 @@ using DataStore.EF;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TicketsAPI.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +30,11 @@ builder.Services.AddVersionedApiExplorer(options =>
 {
     options.GroupNameFormat = "'v'VVV";
 });
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+options.SwaggerDoc("v1", new OpenApiInfo { Title = "API v1", Version = "v1" });
+options.SwaggerDoc("v2", new OpenApiInfo { Title = "API v2", Version = "v2" });
+});
 
 var app = builder.Build();
 
@@ -44,6 +49,7 @@ app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    options.SwaggerEndpoint("/swagger/v2/swagger.json", "API v2");
 });
 
 app.MapControllers();
