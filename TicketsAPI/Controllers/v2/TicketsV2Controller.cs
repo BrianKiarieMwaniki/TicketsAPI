@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Http.OData;
 using TicketsAPI.Filter.V2.TicketFilter;
+using TicketsAPI.QueryFilters.TicketFilters;
 
 namespace TicketsAPI.Controllers.v2
 {
@@ -17,6 +19,31 @@ namespace TicketsAPI.Controllers.v2
         public TicketsV2Controller(BugsContext context)
         {
             _context = context;
+        }
+
+        [EnableQuery]
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery]TicketQueryFilter ticketQueryFilter)
+        {
+            IQueryable<Ticket> tickets = _context.Tickets;
+
+            if(ticketQueryFilter != null)
+            {
+                if(ticketQueryFilter.Id.HasValue)
+                {
+                    tickets = tickets.Where(t => t.Id == ticketQueryFilter.Id);
+                }
+                if(!string.IsNullOrWhiteSpace(ticketQueryFilter.Title))
+                {
+                    tickets = tickets.Where(t => t.Title.Contains(ticketQueryFilter.Title, StringComparison.OrdinalIgnoreCase));
+                }
+                if (!string.IsNullOrWhiteSpace(ticketQueryFilter.Description))
+                {
+                    tickets = tickets.Where(t => t.Description.Contains(ticketQueryFilter.Description, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+
+            return Ok(await tickets.ToListAsync());
         }
 
         [HttpGet("{id}")]
