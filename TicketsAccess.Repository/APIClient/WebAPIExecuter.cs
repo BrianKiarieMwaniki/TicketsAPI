@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TicketsAccess.Repository.APIClient
 {
-    public class WebAPIExecuter
+    public class WebAPIExecuter : IWebAPIExecuter
     {
         private readonly string _baseUrl;
         private readonly HttpClient _httpClient;
