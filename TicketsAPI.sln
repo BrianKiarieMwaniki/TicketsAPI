@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStore.EF", "DataStore.EF\DataStore.EF.csproj", "{1EEF8163-6B57-44F9-B23A-4D55B01574D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketsAccess.Repository", "TicketsAccess.Repository\TicketsAccess.Repository.csproj", "{8BF15A10-CABB-4CC8-9F5B-29AF042A1C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketsAccess.Repository", "TicketsAccess.Repository\TicketsAccess.Repository.csproj", "{8BF15A10-CABB-4CC8-9F5B-29AF042A1C59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketsAPI.Test", "TicketsAPI.Test\TicketsAPI.Test.csproj", "{8424D4A6-6B23-4B91-8EF8-E56ADA6F3A8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8BF15A10-CABB-4CC8-9F5B-29AF042A1C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BF15A10-CABB-4CC8-9F5B-29AF042A1C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BF15A10-CABB-4CC8-9F5B-29AF042A1C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8424D4A6-6B23-4B91-8EF8-E56ADA6F3A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8424D4A6-6B23-4B91-8EF8-E56ADA6F3A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8424D4A6-6B23-4B91-8EF8-E56ADA6F3A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8424D4A6-6B23-4B91-8EF8-E56ADA6F3A8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

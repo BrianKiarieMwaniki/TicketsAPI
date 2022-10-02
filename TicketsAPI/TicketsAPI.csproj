@@ -19,4 +19,8 @@
     <ProjectReference Include="..\DataStore.EF\DataStore.EF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(AssemblyName).Test"/>
+  </ItemGroup>
+
 </Project>
