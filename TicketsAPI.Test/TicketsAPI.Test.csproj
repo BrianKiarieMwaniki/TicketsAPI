@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TicketsAccess.Repository\TicketsAccess.Repository.csproj" />
     <ProjectReference Include="..\TicketsAPI\TicketsAPI.csproj" />
   </ItemGroup>
 

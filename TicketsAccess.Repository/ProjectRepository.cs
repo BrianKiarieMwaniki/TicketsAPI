@@ -8,7 +8,7 @@ using TicketsAccess.Repository.APIClient;
 
 namespace TicketsAccess.Repository
 {
-    public class ProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
         private readonly IWebAPIExecuter _executer;
 
