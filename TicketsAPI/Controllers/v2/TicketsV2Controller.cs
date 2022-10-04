@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Http.OData;
+using TicketsAPI.Filter;
 using TicketsAPI.Filter.V2.TicketFilter;
 using TicketsAPI.QueryFilters.TicketFilters;
 
@@ -12,6 +13,7 @@ namespace TicketsAPI.Controllers.v2
     //[Route("api/v{v:apiVersion}/tickets")] version with route
     [Route("api/tickets")]
     [ApiController]
+    [APIKeyAuthFilter]
     public class TicketsV2Controller : ControllerBase
     {
         private readonly BugsContext _context;
