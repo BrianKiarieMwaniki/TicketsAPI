@@ -36,6 +36,16 @@ options.SwaggerDoc("v1", new OpenApiInfo { Title = "API v1", Version = "v1" });
 options.SwaggerDoc("v2", new OpenApiInfo { Title = "API v2", Version = "v2" });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:5073/")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if(app.Environment.IsDevelopment())
