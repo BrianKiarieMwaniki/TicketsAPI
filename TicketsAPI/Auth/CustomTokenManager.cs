@@ -12,7 +12,7 @@
 
         public bool VerifyToken(string token)
         {
-            return tokens.Any(t => !string.IsNullOrWhiteSpace(token) && token.Contains(t.TokenString));
+            return tokens.Any(t => !string.IsNullOrWhiteSpace(token) && token.Contains(t.TokenString) && t.ExpiryDate > DateTime.Now);
         }
 
         public string GetUserInfoByToken(string tokenString)
