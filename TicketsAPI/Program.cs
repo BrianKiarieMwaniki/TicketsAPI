@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using TicketsAPI.Auth;
 using TicketsAPI.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +46,8 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
+builder.Services.AddTransient<ICustomTokenManager, CustomTokenManager>();
+builder.Services.AddTransient<ICustomUserManager, CustomUserManager>();
 
 var app = builder.Build();
 
