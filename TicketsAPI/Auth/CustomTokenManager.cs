@@ -7,12 +7,12 @@
         {
             var token = new Token(username);
             tokens.Add(token);
-            return "";
+            return token.TokenString;
         }
 
         public bool VerifyToken(string token)
         {
-            return tokens.Any(t => !string.IsNullOrWhiteSpace(token) && token.Contains(t.TokenString) && t.ExpiryDate > DateTime.Now);
+            return tokens.Any(t => token != null && token.Contains(t.TokenString) && t.ExpiryDate > DateTime.Now);
         }
 
         public string GetUserInfoByToken(string tokenString)

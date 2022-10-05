@@ -1,8 +1,8 @@
 ﻿namespace TicketsAPI.Auth
 {
-    public class CustomUserManager
+    public class CustomUserManager : ICustomUserManager
     {
-        private Dictionary<string, string> credentials = new Dictionary<string, string>() 
+        private Dictionary<string, string> credentials = new Dictionary<string, string>()
         {
             {"Brian", "password1"}
         };

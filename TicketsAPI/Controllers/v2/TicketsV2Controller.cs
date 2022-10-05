@@ -13,7 +13,8 @@ namespace TicketsAPI.Controllers.v2
     //[Route("api/v{v:apiVersion}/tickets")] version with route
     [Route("api/tickets")]
     [ApiController]
-    [APIKeyAuthFilter]
+    //[APIKeyAuthFilter]
+    [CustomTokenAuthFilter]
     public class TicketsV2Controller : ControllerBase
     {
         private readonly BugsContext _context;
