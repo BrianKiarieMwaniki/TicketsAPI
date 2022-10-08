@@ -19,15 +19,17 @@ namespace TicketsAPI.Auth
         }
         public string CreateToken(string username)
         {
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, username));
+
+            if(username.Equals("brian", StringComparison.OrdinalIgnoreCase))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "admin"));
+            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity
-                (
-                    new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, username)
-                    }
-                ),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(secretKey),
