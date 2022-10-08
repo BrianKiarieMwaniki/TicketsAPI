@@ -46,8 +46,8 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod();
     });
 });
-builder.Services.AddTransient<ICustomTokenManager, CustomTokenManager>();
-builder.Services.AddTransient<ICustomUserManager, CustomUserManager>();
+builder.Services.AddSingleton<ICustomTokenManager, CustomTokenManager>();
+builder.Services.AddSingleton<ICustomUserManager, CustomUserManager>();
 
 var app = builder.Build();
 
