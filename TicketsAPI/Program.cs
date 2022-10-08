@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Security.Cryptography.Xml;
 using TicketsAPI.Auth;
 using TicketsAPI.Utils;
 
@@ -33,8 +34,32 @@ builder.Services.AddVersionedApiExplorer(options =>
 });
 builder.Services.AddSwaggerGen(options =>
 {
-options.SwaggerDoc("v1", new OpenApiInfo { Title = "API v1", Version = "v1" });
-options.SwaggerDoc("v2", new OpenApiInfo { Title = "API v2", Version = "v2" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "API v1", Version = "v1" });
+    options.SwaggerDoc("v2", new OpenApiInfo { Title = "API v2", Version = "v2" });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "tokenHeader",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter your valid token in the textbox below."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
 });
 
 builder.Services.AddCors(options =>
